@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:padding="24dp"
+    android:background="@drawable/background_gradient">
+
+    <TextView
+        android:id="@+id/tvWelcome"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:layout_marginBottom="10dp"
+        android:shadowColor="#55000000"
+        android:shadowDx="2"
+        android:shadowDy="5"
+        android:shadowRadius="4"
+        android:text="Make reservation now "
+        android:textColor="#001F3F"
+        android:textSize="26sp"
+        android:textStyle="bold" />
+
+    <!-- First Name Input -->
+    <EditText
+        android:id="@+id/firstName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:background="@android:drawable/edit_text"
+        android:hint="First Name"
+        android:inputType="textPersonName"
+        android:padding="10dp" />
+
+
+    <!-- Last Name Input -->
+    <EditText
+        android:id="@+id/lastName"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:hint="Last Name"
+        android:inputType="textPersonName"
+        android:layout_marginTop="15dp"
+        android:background="@android:drawable/edit_text"
+        android:padding="10dp"/>
+
+
+    <EditText
+        android:id="@+id/nights"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:background="@android:drawable/edit_text"
+        android:hint="Enter nights stay"
+        android:inputType="textPersonName"
+        android:padding="10dp" />
+
+    <!-- Age Input -->
+    <EditText
+        android:id="@+id/age"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:hint="Age"
+        android:inputType="number"
+        android:layout_marginTop="15dp"
+        android:background="@android:drawable/edit_text"
+        android:padding="10dp"/>
+
+    <!-- Submit Button -->
+    <Button
+        android:id="@+id/submitBtn"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:text="Submit"
+        android:textColor="#FFFFFF"
+        android:background="#2196F3"
+        android:layout_marginTop="30dp"/>
+
+</LinearLayout>

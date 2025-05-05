@@ -1,0 +1,71 @@
+package com.example.myapplication;
+
+import static android.content.ContentValues.TAG;
+
+import android.annotation.SuppressLint;
+import android.content.Intent;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.HashMap;
+import java.util.Map;
+
+public class MainActivity extends AppCompatActivity {
+
+    Button btnBooking, btnServices, btnAboutUs  ;
+    FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+
+    FirebaseAuth mAuth = FirebaseAuth.getInstance();
+    FirebaseUser currentUser;
+
+    @SuppressLint("MissingInflatedId")
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        currentUser = mAuth.getCurrentUser();
+
+        btnBooking = findViewById(R.id.btnBooking);
+        btnServices = findViewById(R.id.btnServices);
+        btnAboutUs = findViewById(R.id.btnAboutUs);
+
+
+        btnBooking.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent(MainActivity.this, BookingActivity.class);
+                startActivity(intent);
+            }
+        });
+
+
+
+        btnAboutUs.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, AboutUsActivity.class);
+                startActivity(intent);
+            }
+        });
+    }
+}

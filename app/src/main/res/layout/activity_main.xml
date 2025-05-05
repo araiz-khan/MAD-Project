@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:padding="24dp"
+    android:background="@drawable/dark">
+
+
+    <TextView
+        android:id="@+id/tvWelcome"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="60dp"
+        android:layout_marginBottom="40dp"
+        android:shadowColor="#55000000"
+        android:shadowDx="2"
+        android:shadowDy="5"
+        android:shadowRadius="4"
+        android:text="Welcome to Hotel Management App"
+        android:textColor="@color/white"
+        android:textSize="26sp"
+        android:textStyle="bold" />
+
+    <Button
+        android:id="@+id/btnBooking"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:text="Book a Room"
+        android:textSize="18sp"
+        android:textColor="#FFFFFF"
+        android:backgroundTint="#3B82F6"
+        android:elevation="8dp"
+        android:translationZ="4dp"
+        android:layout_marginBottom="20dp" />
+
+    <!-- Our Services Button -->
+    <Button
+        android:id="@+id/btnServices"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:text="check booking "
+        android:textSize="18sp"
+        android:textColor="#FFFFFF"
+        android:backgroundTint="#6366F1"
+        android:elevation="8dp"
+        android:translationZ="4dp"
+        android:layout_marginBottom="20dp" />
+
+    <!-- About Us Button -->
+    <Button
+        android:id="@+id/btnAboutUs"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:text="About Us"
+        android:textSize="18sp"
+        android:textColor="#FFFFFF"
+        android:backgroundTint="#10B981"
+        android:elevation="8dp"
+        android:translationZ="4dp"
+        android:layout_marginBottom="20dp" />
+
+
+</LinearLayout>
