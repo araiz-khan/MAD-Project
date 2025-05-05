@@ -1,47 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:gravity="center"
-    android:padding="24dp"
-    android:background="@drawable/background_gradient">
+    android:padding="10dp"
+    android:background="@drawable/login_dark">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Alpha Hotels"
+        android:text="@string/alpha_hotels"
         android:textSize="30sp"
         android:textStyle="bold"
         android:textColor="#001F3F"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="50dp"
-        android:shadowColor="#55000000"
-        android:shadowDx="2"
-        android:shadowDy="5"
-        android:shadowRadius="4" />
+        android:layout_marginTop="50dp" />
 
+    <!-- Email -->
+    <com.google.android.material.textfield.TextInputLayout
 
-    <EditText
-        android:id="@+id/emailLogin"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:hint="Email Address"
-        android:inputType="textEmailAddress"
-        android:layout_marginTop="40dp"
-        android:padding="10dp"
-        android:background="@drawable/edittext_background" />
+        android:layout_height="55dp"
+        android:layout_marginTop="10dp"
+        app:boxBackgroundMode="outline"
+        app:boxCornerRadiusBottomEnd="12dp"
+        app:boxCornerRadiusTopEnd="12dp"
+        app:boxCornerRadiusBottomStart="12dp"
+        app:boxCornerRadiusTopStart="12dp"
+        app:boxBackgroundColor="@color/white"
+        android:hint="@string/email">
 
-    <EditText
-        android:id="@+id/passwordLogin"
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/emailLogin"
+            android:inputType="textEmailAddress"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+    <!-- Password -->
+    <com.google.android.material.textfield.TextInputLayout
+
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:hint="Password"
-        android:inputType="textPassword"
-        android:layout_marginTop="16dp"
-        android:padding="10dp"
-        android:background="@drawable/edittext_background" />
+        android:layout_height="55dp"
+        android:layout_marginTop="10dp"
+        app:boxBackgroundMode="outline"
+        app:boxCornerRadiusBottomEnd="12dp"
+        app:boxCornerRadiusTopEnd="12dp"
+        app:boxCornerRadiusBottomStart="12dp"
+        app:boxCornerRadiusTopStart="12dp"
+        app:boxBackgroundColor="@color/white"
+        android:hint="@string/password">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/passwordLogin"
+            android:inputType="textPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+    </com.google.android.material.textfield.TextInputLayout>
 
     <Button
         android:id="@+id/loginBtn"
@@ -50,8 +70,8 @@
         android:text="Login"
         android:textSize="18sp"
         android:textColor="#FFFFFF"
-        android:backgroundTint="#3B82F6"
-        android:layout_marginTop="30dp"
+        android:backgroundTint="@color/black"
+        android:layout_marginTop="15dp"
         android:layout_marginBottom="10dp"
         android:elevation="8dp"
         android:translationZ="4dp" />
@@ -62,7 +82,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Don't have an account? Sign Up"
-        android:textColor="#ECEFCA"
+        android:textColor="@color/black"
         android:textSize="16sp"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="16dp" />
