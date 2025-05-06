@@ -43,6 +43,14 @@ public class BookingActivity extends AppCompatActivity {
         ageEditText = findViewById(R.id.age);
         submitButton = findViewById(R.id.submitBtn);
         nights=findViewById(R.id.nights);
+
+        // Enable ActionBar and set title and back button
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setTitle("Book Now");
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
+
+
         // Set onClickListener for the submit button
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -61,9 +69,6 @@ public class BookingActivity extends AppCompatActivity {
                         // Parse the age to an integer
                         int age = Integer.parseInt(ageStr);
 
-                        // Display the collected data in a Toast
-                        String userData = "Name: " + firstName + " " + lastName + "\nAge: " + age +"  nights:"+night;
-                        Toast.makeText(BookingActivity.this, userData, Toast.LENGTH_LONG).show();
 
                         // Now save the data to Firestore
                         Map<String, Object> user = new HashMap<>();
@@ -78,7 +83,7 @@ public class BookingActivity extends AppCompatActivity {
                                     @Override
                                     public void onSuccess(DocumentReference documentReference) {
                                         Log.d(TAG, "DocumentSnapshot added with ID: " + documentReference.getId());
-                                        Toast.makeText(BookingActivity.this, "Data saved successfully", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(BookingActivity.this, "Reservation Confirmed", Toast.LENGTH_SHORT).show();
                                     }
                                 })
                                 .addOnFailureListener(new OnFailureListener() {
@@ -95,5 +100,10 @@ public class BookingActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+    @Override
+    public boolean onSupportNavigateUp() {
+        finish(); // or use finish();
+        return true;
     }
 }

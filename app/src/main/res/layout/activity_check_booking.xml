@@ -1,39 +1,77 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    android:padding="20dp">
+    android:gravity="center"
+    android:background="@drawable/background"
+    android:padding="24dp">
 
-
-    <EditText
-        android:id="@+id/nameEditText"
-        android:layout_width="match_parent"
+    <TextView
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:hint="Enter First Name"
-        android:padding="12dp"
-        android:background="@android:drawable/edit_text"
-        android:textSize="16sp"
-        android:layout_marginBottom="16dp" />
+        android:text="Check Your Booking"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        android:textColor="#001F3F"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="50dp" />
+
+
+    <com.google.android.material.textfield.TextInputLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:layout_marginTop="20dp"
+        app:boxBackgroundMode="outline"
+        app:boxCornerRadiusBottomEnd="12dp"
+        app:boxCornerRadiusTopEnd="12dp"
+        app:boxCornerRadiusBottomStart="12dp"
+        app:boxCornerRadiusTopStart="12dp"
+        app:boxBackgroundColor="@color/white"
+        android:alpha="0.8"
+        android:hint="Enter First Name">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/nameEditText"
+            android:inputType="text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+    </com.google.android.material.textfield.TextInputLayout>
 
     <Button
         android:id="@+id/checkButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Check Booking"
-        android:padding="12dp"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginBottom="24dp"/>
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:text="Check"
+        android:textSize="18sp"
+        android:textColor="#FFFFFF"
+        android:backgroundTint="@color/black"
+        android:layout_marginTop="15dp"
+        android:layout_marginBottom="10dp"/>
 
     <TextView
-        android:id="@+id/resultTextView"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Result will be shown here..."
-        android:textSize="16sp"
+        android:text="Result"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        android:textSize="24sp"
+        android:layout_gravity="start"
+        android:padding="10dp"
+        android:layout_marginStart="10dp"/>
+    <TextView
+        android:id="@+id/resultTextView"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:textColor="@color/black"
+        android:layout_gravity="start"
+        android:layout_marginStart="10dp"
         android:padding="12dp"
-        android:background="#EFEFEF"
+        android:background="@color/white"
         android:minHeight="100dp"/>
 
 </LinearLayout>

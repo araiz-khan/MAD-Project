@@ -38,6 +38,12 @@ public class CheckBookingActivity extends AppCompatActivity {
         checkButton = findViewById(R.id.checkButton);
         resultTextView = findViewById(R.id.resultTextView);
 
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setTitle("Check Booking");
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
+
+
         checkButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -53,6 +59,7 @@ public class CheckBookingActivity extends AppCompatActivity {
                         .whereEqualTo("first", enteredName)
                         .get()
                         .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+
                             @Override
                             public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
                                 if (queryDocumentSnapshots.isEmpty()) {
@@ -63,9 +70,11 @@ public class CheckBookingActivity extends AppCompatActivity {
                                         String firstName = document.getString("first");
                                         String lastName = document.getString("last");
                                         Long age = document.getLong("born");
+                                        String nightsToStay = document.getString("nights to stay"); // Add this line to fetch nights to stay
 
                                         result.append("Name: ").append(firstName).append(" ").append(lastName)
                                                 .append("\nAge: ").append(age)
+                                                .append("\nNights to stay: ").append(nightsToStay)
                                                 .append("\n\n");
                                     }
                                     resultTextView.setText(result.toString());
@@ -79,7 +88,17 @@ public class CheckBookingActivity extends AppCompatActivity {
                                 Toast.makeText(CheckBookingActivity.this, "Error fetching data", Toast.LENGTH_SHORT).show();
                             }
                         });
+
+
             }
+
         });
+
     }
+    @Override
+    public boolean onSupportNavigateUp() {
+        finish(); // or use finish();
+        return true;
+    }
+
 }

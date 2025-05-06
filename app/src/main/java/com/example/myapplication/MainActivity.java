@@ -29,7 +29,7 @@ import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
 
-    Button btnBooking, btnServices, btnAboutUs, btnLogout;
+    Button btnBooking, btn_chk_book, btnAboutUs, btnLogout;
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     FirebaseAuth mAuth = FirebaseAuth.getInstance();
     FirebaseUser currentUser;
@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
 
         btnBooking = findViewById(R.id.btnBooking);
         btnLogout=findViewById(R.id.btnLogout);
-        btnServices = findViewById(R.id.btnServices);
+        btn_chk_book = findViewById(R.id.btn_chk_book);
         btnAboutUs = findViewById(R.id.btnAboutUs);
         currentUser = mAuth.getCurrentUser();
 
@@ -80,7 +80,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-
         btnAboutUs.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -89,10 +88,10 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        btnServices.setOnClickListener(new View.OnClickListener() {
+        btn_chk_book.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, ServiceActivity.class); // or the correct activity
+                Intent intent = new Intent(MainActivity.this, CheckBookingActivity.class); // or the correct activity
                 startActivity(intent);
             }
         });

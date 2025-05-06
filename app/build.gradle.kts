@@ -30,6 +30,9 @@ android {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
     }
+    buildFeatures {
+        viewBinding = true
+    }
 }
 
 dependencies {
@@ -44,6 +47,8 @@ dependencies {
     androidTestImplementation(libs.espresso.core)
 }
 dependencies {
+    implementation(libs.navigation.fragment)
+    implementation(libs.navigation.ui)
     implementation(libs.firebase.database)// Import the BoM for the Firebase platform
     implementation(platform("com.google.firebase:firebase-bom:33.12.0"))
 
