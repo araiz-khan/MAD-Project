@@ -5,7 +5,7 @@
     android:orientation="vertical"
     android:gravity="center"
     android:padding="24dp"
-    android:background="@drawable/dark">
+    android:background="@drawable/background">
 
 
     <TextView
@@ -14,12 +14,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="60dp"
         android:layout_marginBottom="40dp"
-        android:shadowColor="#55000000"
-        android:shadowDx="2"
-        android:shadowDy="5"
-        android:shadowRadius="4"
-        android:text="Welcome to Hotel Management App"
-        android:textColor="@color/white"
+        android:text="Welcome to\n        Alpha Hotels"
+        android:textColor="@color/black"
         android:textSize="26sp"
         android:textStyle="bold" />
 
@@ -29,10 +25,8 @@
         android:layout_height="50dp"
         android:text="Book a Room"
         android:textSize="18sp"
-        android:textColor="#FFFFFF"
-        android:backgroundTint="#3B82F6"
-        android:elevation="8dp"
-        android:translationZ="4dp"
+        android:backgroundTint="@color/black"
+        android:alpha="0.85"
         android:layout_marginBottom="20dp" />
 
     <!-- Our Services Button -->
@@ -40,13 +34,12 @@
         android:id="@+id/btnServices"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:text="check booking "
+        android:text="Check booking "
         android:textSize="18sp"
-        android:textColor="#FFFFFF"
-        android:backgroundTint="#6366F1"
-        android:elevation="8dp"
-        android:translationZ="4dp"
+        android:backgroundTint="@color/blue"
+        android:alpha="0.85"
         android:layout_marginBottom="20dp" />
+
 
     <!-- About Us Button -->
     <Button
@@ -55,10 +48,8 @@
         android:layout_height="50dp"
         android:text="About Us"
         android:textSize="18sp"
-        android:textColor="#FFFFFF"
-        android:backgroundTint="#10B981"
-        android:elevation="8dp"
-        android:translationZ="4dp"
+        android:backgroundTint="#10A567"
+        android:alpha="0.85"
         android:layout_marginBottom="20dp" />
 
 

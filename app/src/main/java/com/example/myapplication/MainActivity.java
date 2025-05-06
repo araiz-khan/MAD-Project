@@ -31,8 +31,6 @@ public class MainActivity extends AppCompatActivity {
 
     Button btnBooking, btnServices, btnAboutUs  ;
     FirebaseFirestore db = FirebaseFirestore.getInstance();
-
-
     FirebaseAuth mAuth = FirebaseAuth.getInstance();
     FirebaseUser currentUser;
 
@@ -48,16 +46,16 @@ public class MainActivity extends AppCompatActivity {
         btnServices = findViewById(R.id.btnServices);
         btnAboutUs = findViewById(R.id.btnAboutUs);
 
-
         btnBooking.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 Intent intent = new Intent(MainActivity.this, BookingActivity.class);
                 startActivity(intent);
+                finish();
+
             }
         });
-
 
 
         btnAboutUs.setOnClickListener(new View.OnClickListener() {
@@ -65,6 +63,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, AboutUsActivity.class);
                 startActivity(intent);
+                finish();
             }
         });
     }

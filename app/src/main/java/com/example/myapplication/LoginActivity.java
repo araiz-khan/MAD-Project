@@ -41,13 +41,15 @@ public class LoginActivity extends AppCompatActivity {
         signupLink = findViewById(R.id.signupLink);
 
         loginBtn.setOnClickListener(v -> {
-            String email = emailLogin.getText().toString().trim();
-            String password = passwordLogin.getText().toString().trim();
+            String email = emailLogin.getText().toString();
+            String password = passwordLogin.getText().toString();
 
             if (email.isEmpty()) {
                 emailLogin.setError("Enter email");
+                Toast.makeText(this, "Enter email", Toast.LENGTH_SHORT).show();
             } else if (password.isEmpty()) {
                 passwordLogin.setError("Enter password");
+                Toast.makeText(this, "Enter password", Toast.LENGTH_SHORT).show();
             } else {
                 mAuth.signInWithEmailAndPassword(email, password)
                         .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
@@ -57,21 +59,20 @@ public class LoginActivity extends AppCompatActivity {
                                     // Sign in success, update UI with the signed-in user's information
 
                                     FirebaseUser user = mAuth.getCurrentUser();
-                                    Intent intent= new Intent(LoginActivity.this, MainActivity.class);
-                                    startActivity(intent);
 
+                                    Toast.makeText(LoginActivity.this, "Login Successful", Toast.LENGTH_SHORT).show();
+
+                                    Intent intent= new Intent(LoginActivity.this, MainActivity.class);
+                                   startActivity(intent);
 
                                 } else {
                                     // If sign in fails, display a message to the user.
-                                    Log.w(TAG, "signInWithEmail:failure", task.getException());
-
+                                    Toast.makeText(LoginActivity.this, "Invalid username or password",
+                                            Toast.LENGTH_SHORT).show();
                                 }
                             }
                         });
-                // Normally login logic here
-                Toast.makeText(this, "Login Successful", Toast.LENGTH_SHORT).show();
-
-            }
+                }
         });
 
         signupLink.setOnClickListener(v -> {

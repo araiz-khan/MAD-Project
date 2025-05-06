@@ -4,9 +4,9 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    android:padding="10dp"
+    android:padding="24dp"
     android:gravity="center"
-    android:background="@drawable/loginbkg4">
+    android:background="@drawable/login_dark">
 
 
     <TextView
@@ -98,7 +98,7 @@
         android:layout_marginBottom="10dp"/>
 
     <TextView
-        android:id="@+id/signinLink"
+        android:id="@+id/loginLink"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/already_have_an_account_login"

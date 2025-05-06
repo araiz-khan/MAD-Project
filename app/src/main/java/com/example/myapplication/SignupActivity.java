@@ -25,7 +25,7 @@ public class SignupActivity extends AppCompatActivity {
     EditText nameSignup, emailSignup, passwordSignup;
     Button signupBtn;
     private FirebaseAuth mAuth;
-    TextView signinLink;
+    TextView loginLink;
 
 
     @SuppressLint("MissingInflatedId")
@@ -39,7 +39,7 @@ public class SignupActivity extends AppCompatActivity {
         emailSignup = findViewById(R.id.emailSignup);
         passwordSignup = findViewById(R.id.passwordSignup);
         signupBtn = findViewById(R.id.signupBtn);
-        signinLink=findViewById(R.id.signinLink);
+        loginLink=findViewById(R.id.loginLink);
 
         signupBtn.setOnClickListener(v -> {
             String name = nameSignup.getText().toString().trim();
@@ -60,15 +60,21 @@ public class SignupActivity extends AppCompatActivity {
                                 if (task.isSuccessful()) {
 
                                     FirebaseUser user = mAuth.getCurrentUser();
+
+                                    Toast.makeText(SignupActivity.this, "Signup Successful", Toast.LENGTH_SHORT).show();
+
+                                    Intent intent = new Intent(SignupActivity.this, LoginActivity.class);
+                                    startActivity(intent);
+                                }
+                                else {
+                                    Toast.makeText(SignupActivity.this, "Authentication failed.",
+                                            Toast.LENGTH_SHORT).show();
                                 }
                             }
                         });
-                Toast.makeText(this, "Signup Successful", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(SignupActivity.this, LoginActivity.class);
-                startActivity(intent);
-            }
+                }
         });
-        signinLink.setOnClickListener(v -> {
+        loginLink.setOnClickListener(v -> {
             Intent intent = new Intent(SignupActivity.this, LoginActivity.class);
             startActivity(intent);
         });

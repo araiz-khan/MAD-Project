@@ -2,10 +2,11 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:gravity="center"
     android:padding="24dp"
-    android:background="@drawable/background_gradient">
+    android:background="@drawable/background">
 
     <TextView
         android:id="@+id/tvWelcome"
@@ -13,68 +14,110 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
         android:layout_marginBottom="10dp"
-        android:shadowColor="#55000000"
-        android:shadowDx="2"
-        android:shadowDy="5"
-        android:shadowRadius="4"
         android:text="Make reservation now "
         android:textColor="#001F3F"
         android:textSize="26sp"
         android:textStyle="bold" />
 
     <!-- First Name Input -->
-    <EditText
-        android:id="@+id/firstName"
+    <com.google.android.material.textfield.TextInputLayout
+
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
-        android:background="@android:drawable/edit_text"
-        android:hint="First Name"
-        android:inputType="textPersonName"
-        android:padding="10dp" />
+        android:layout_height="55dp"
+        android:layout_marginTop="10dp"
+        app:boxBackgroundMode="outline"
+        app:boxCornerRadiusBottomEnd="12dp"
+        app:boxCornerRadiusTopEnd="12dp"
+        app:boxCornerRadiusBottomStart="12dp"
+        app:boxCornerRadiusTopStart="12dp"
+        app:boxBackgroundColor="@color/white"
+        android:hint="@string/first_name">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/firstName"
+            android:inputType="text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+    </com.google.android.material.textfield.TextInputLayout>
 
 
     <!-- Last Name Input -->
-    <EditText
-        android:id="@+id/lastName"
+    <com.google.android.material.textfield.TextInputLayout
+
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:hint="Last Name"
-        android:inputType="textPersonName"
-        android:layout_marginTop="15dp"
-        android:background="@android:drawable/edit_text"
-        android:padding="10dp"/>
+        android:layout_height="55dp"
+        android:layout_marginTop="10dp"
+        app:boxBackgroundMode="outline"
+        app:boxCornerRadiusBottomEnd="12dp"
+        app:boxCornerRadiusTopEnd="12dp"
+        app:boxCornerRadiusBottomStart="12dp"
+        app:boxCornerRadiusTopStart="12dp"
+        app:boxBackgroundColor="@color/white"
+        android:hint="@string/last_name">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/lastName"
+            android:inputType="text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+    </com.google.android.material.textfield.TextInputLayout>
 
 
-    <EditText
-        android:id="@+id/nights"
+    <com.google.android.material.textfield.TextInputLayout
+
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:background="@android:drawable/edit_text"
-        android:hint="Enter nights stay"
-        android:inputType="textPersonName"
-        android:padding="10dp" />
+        android:layout_height="55dp"
+        android:layout_marginTop="10dp"
+        app:boxBackgroundMode="outline"
+        app:boxCornerRadiusBottomEnd="12dp"
+        app:boxCornerRadiusTopEnd="12dp"
+        app:boxCornerRadiusBottomStart="12dp"
+        app:boxCornerRadiusTopStart="12dp"
+        app:boxBackgroundColor="@color/white"
+        android:hint="Enter Nights Stay">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/nights"
+            android:inputType="text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+    </com.google.android.material.textfield.TextInputLayout>
 
     <!-- Age Input -->
-    <EditText
-        android:id="@+id/age"
+    <com.google.android.material.textfield.TextInputLayout
+
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:hint="Age"
-        android:inputType="number"
-        android:layout_marginTop="15dp"
-        android:background="@android:drawable/edit_text"
-        android:padding="10dp"/>
+        android:layout_height="55dp"
+        android:layout_marginTop="10dp"
+        app:boxBackgroundMode="outline"
+        app:boxCornerRadiusBottomEnd="12dp"
+        app:boxCornerRadiusTopEnd="12dp"
+        app:boxCornerRadiusBottomStart="12dp"
+        app:boxCornerRadiusTopStart="12dp"
+        app:boxBackgroundColor="@color/white"
+        android:hint="Age">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/age"
+            android:inputType="text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+    </com.google.android.material.textfield.TextInputLayout>
 
     <!-- Submit Button -->
     <Button
-        android:id="@+id/submitBtn"
+        android:id="@+id/loginBtn"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:text="Submit"
+        android:textSize="18sp"
         android:textColor="#FFFFFF"
-        android:background="#2196F3"
-        android:layout_marginTop="30dp"/>
+        android:backgroundTint="@color/black"
+        android:layout_marginTop="15dp"
+        android:layout_marginBottom="10dp"/>
 
 </LinearLayout>
