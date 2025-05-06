@@ -27,9 +27,8 @@ public class BookingActivity extends AppCompatActivity {
     FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     // Declare EditText fields for first name, last name, and age
-    EditText firstNameEditText, lastNameEditText, ageEditText,nights;
+    EditText firstNameEditText, lastNameEditText, ageEditText, nights;
     Button submitButton;
-
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -42,7 +41,7 @@ public class BookingActivity extends AppCompatActivity {
         lastNameEditText = findViewById(R.id.lastName);
         ageEditText = findViewById(R.id.age);
         submitButton = findViewById(R.id.submitBtn);
-        nights=findViewById(R.id.nights);
+        nights = findViewById(R.id.nights);
 
         // Enable ActionBar and set title and back button
         if (getSupportActionBar() != null) {
@@ -59,7 +58,8 @@ public class BookingActivity extends AppCompatActivity {
                 String firstName = firstNameEditText.getText().toString();
                 String lastName = lastNameEditText.getText().toString();
                 String ageStr = ageEditText.getText().toString();
-                String night= nights.getText().toString();
+                String night = nights.getText().toString();
+
                 // Validate the input data
                 if (firstName.isEmpty() || lastName.isEmpty() || ageStr.isEmpty()) {
                     // If any field is empty, show a toast message
@@ -69,30 +69,35 @@ public class BookingActivity extends AppCompatActivity {
                         // Parse the age to an integer
                         int age = Integer.parseInt(ageStr);
 
+                        // Check if the user is eligible based on age
+                        if (age < 18) {
+                            Toast.makeText(BookingActivity.this, "You are not eligible to book", Toast.LENGTH_SHORT).show();
+                        } else {
+                            // Now save the data to Firestore
+                            Map<String, Object> user = new HashMap<>();
+                            user.put("first", firstName);
+                            user.put("last", lastName);
+                            user.put("born", age);
+                            user.put("nights to stay", night);
 
-                        // Now save the data to Firestore
-                        Map<String, Object> user = new HashMap<>();
-                        user.put("first", firstName);
-                        user.put("last", lastName);
-                        user.put("born", age);
-                        user.put("nights to stay", night);
-                                // Add data to Firestore
-                        db.collection("users")
-                                .add(user)
-                                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                                    @Override
-                                    public void onSuccess(DocumentReference documentReference) {
-                                        Log.d(TAG, "DocumentSnapshot added with ID: " + documentReference.getId());
-                                        Toast.makeText(BookingActivity.this, "Reservation Confirmed", Toast.LENGTH_SHORT).show();
-                                    }
-                                })
-                                .addOnFailureListener(new OnFailureListener() {
-                                    @Override
-                                    public void onFailure(@NonNull Exception e) {
-                                        Log.w(TAG, "Error adding document", e);
-                                        Toast.makeText(BookingActivity.this, "Error saving data", Toast.LENGTH_SHORT).show();
-                                    }
-                                });
+                            // Add data to Firestore
+                            db.collection("users")
+                                    .add(user)
+                                    .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                                        @Override
+                                        public void onSuccess(DocumentReference documentReference) {
+                                            Log.d(TAG, "DocumentSnapshot added with ID: " + documentReference.getId());
+                                            Toast.makeText(BookingActivity.this, "Reservation Confirmed", Toast.LENGTH_SHORT).show();
+                                        }
+                                    })
+                                    .addOnFailureListener(new OnFailureListener() {
+                                        @Override
+                                        public void onFailure(@NonNull Exception e) {
+                                            Log.w(TAG, "Error adding document", e);
+                                            Toast.makeText(BookingActivity.this, "Error saving data", Toast.LENGTH_SHORT).show();
+                                        }
+                                    });
+                        }
                     } catch (NumberFormatException e) {
                         // If age is not a valid number, show an error message
                         Toast.makeText(BookingActivity.this, "Please enter a valid age", Toast.LENGTH_SHORT).show();
@@ -101,6 +106,7 @@ public class BookingActivity extends AppCompatActivity {
             }
         });
     }
+
     @Override
     public boolean onSupportNavigateUp() {
         finish(); // or use finish();
