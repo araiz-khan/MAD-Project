@@ -15,5 +15,11 @@ public class AboutUsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_about_us);
 
+
+        // Enable ActionBar and set title and back button
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setTitle("About Us");
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
     }
 }

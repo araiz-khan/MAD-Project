@@ -17,6 +17,7 @@
         <activity
             android:name=".AboutUsActivity"
             android:exported="false"
+            android:parentActivityName=".MainActivity"
             android:theme="@style/Theme.Material3.Light" />
         <activity
             android:name=".BookingActivity"

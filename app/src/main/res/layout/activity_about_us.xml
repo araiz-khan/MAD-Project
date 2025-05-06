@@ -6,19 +6,16 @@
     android:layout_height="match_parent"
     tools:context=".AboutUsActivity">
 
-    <!-- ScrollView to allow the page to be scrollable -->
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:padding="16dp">
 
-        <!-- LinearLayout to hold all content vertically -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <!-- Banner Image at the top of the page -->
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
@@ -26,7 +23,6 @@
                 android:scaleType="centerCrop"
                 android:contentDescription="About Us Banner" />
 
-            <!-- Title Text -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -37,7 +33,6 @@
                 android:layout_marginTop="20dp"
                 android:layout_gravity="center"/>
 
-            <!-- Space between sections -->
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
@@ -45,20 +40,19 @@
                 android:layout_marginBottom="10dp"
                 android:background="@android:color/darker_gray"/>
 
-            <!-- Short Description about the company or app -->
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Welcome to our app! We are committed to delivering the best user experience with a focus on innovation, efficiency, and quality."
+                android:text="Welcome to Alpha Hotel, your perfect getaway for comfort, luxury, and exceptional service. Nestled in the heart of the city, Alpha Hotel offers a blend of modern elegance and warm hospitality to make every stay memorable.\n\nOur state-of-the-art facilities include:\n• Stylish and spacious rooms\n• An in-house gourmet restaurant\n• A fully equipped fitness center\n• High-speed Wi-Fi throughout the property\n• Impeccable hygiene and 24/7 customer support\n\nAt Alpha Hotel, we believe your comfort is our responsibility. Let us welcome you with warmth, serve you with passion, and ensure your time with us is truly unforgettable."
                 android:textSize="16sp"
                 android:textColor="@android:color/black"
-                android:lineSpacingExtra="5dp"
+                android:fontFamily="serif"
+                android:lineSpacingExtra="6dp"
                 android:paddingBottom="20dp"
                 android:paddingEnd="16dp"
                 android:paddingStart="16dp"
                 android:paddingTop="10dp"/>
 
-            <!-- Section Title -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -70,19 +64,19 @@
                 android:layout_gravity="start"
                 android:paddingStart="16dp"/>
 
-            <!-- Mission Description -->
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Our mission is to empower individuals by creating high-quality, easy-to-use solutions that foster creativity and problem-solving."
+                android:text="At Alpha Hotel, our mission is to provide guests with unforgettable experiences through exceptional hospitality, refined comfort, and personalized service. We strive to be a sanctuary of warmth and luxury, where every guest feels valued, every detail matters, and every stay becomes a cherished memory."
                 android:textSize="16sp"
+                android:layout_marginTop="5dp"
+                android:fontFamily="serif"
                 android:textColor="@android:color/black"
                 android:lineSpacingExtra="5dp"
                 android:paddingStart="16dp"
                 android:paddingEnd="16dp"
                 android:paddingBottom="20dp"/>
 
-            <!-- Team Member Section -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -114,13 +108,12 @@
                     <com.google.android.material.imageview.ShapeableImageView
                         android:layout_width="80dp"
                         android:layout_height="80dp"
-                        android:src="@drawable/team1"
+                        android:src="@drawable/person1"
+                        android:layout_marginStart="3dp"
                         android:contentDescription="Team Member"
                         app:shapeAppearanceOverlay="@style/CircleImageView"
                         app:strokeColor="@android:color/white"
-                        app:strokeWidth="2dp"
-                        android:layout_marginEnd="16dp" />
-
+                        app:strokeWidth="2dp" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -135,7 +128,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="CEO"
+                        android:text="General Manager"
                         android:textSize="14sp"
                         android:textColor="@android:color/black"
                         android:layout_gravity="center"/>
@@ -148,16 +141,15 @@
                     android:orientation="vertical"
                     android:layout_marginEnd="20dp"
                     android:gravity="center">
+
                     <com.google.android.material.imageview.ShapeableImageView
                         android:layout_width="80dp"
                         android:layout_height="80dp"
-                        android:src="@drawable/team2"
+                        android:src="@drawable/person2"
                         android:contentDescription="Team Member"
                         app:shapeAppearanceOverlay="@style/CircleImageView"
                         app:strokeColor="@android:color/white"
-                        app:strokeWidth="2dp"
-                        android:layout_marginEnd="16dp" />
-
+                        app:strokeWidth="2dp" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -179,7 +171,6 @@
                 </LinearLayout>
             </LinearLayout>
 
-            <!-- Contact Information Section -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -194,7 +185,9 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="You can reach us at support@ourapp.com or follow us on social media."
+                android:layout_marginTop="5dp"
+                android:fontFamily="serif"
+                android:text="Email: support@alphahotel.com\nPhone: 042 12345678"
                 android:textSize="16sp"
                 android:textColor="@android:color/black"
                 android:lineSpacingExtra="5dp"
