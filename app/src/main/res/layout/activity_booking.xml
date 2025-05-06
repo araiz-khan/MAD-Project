@@ -110,7 +110,7 @@
 
     <!-- Submit Button -->
     <Button
-        android:id="@+id/loginBtn"
+        android:id="@+id/submitBtn"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:text="Submit"

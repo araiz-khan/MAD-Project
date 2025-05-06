@@ -35,8 +35,6 @@ public class MainActivity extends AppCompatActivity {
     FirebaseUser currentUser;
 
 
-
-
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,10 +67,8 @@ public class MainActivity extends AppCompatActivity {
                 Intent intent = new Intent(MainActivity.this, LoginActivity.class);
                 startActivity(intent);
                 finish();
-
             }
         });
-        
 
         btnBooking.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -80,7 +76,6 @@ public class MainActivity extends AppCompatActivity {
 
                 Intent intent = new Intent(MainActivity.this, BookingActivity.class);
                 startActivity(intent);
-                finish();
 
             }
         });
@@ -91,8 +86,16 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, AboutUsActivity.class);
                 startActivity(intent);
-                finish();
             }
         });
+
+        btnServices.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, ServiceActivity.class); // or the correct activity
+                startActivity(intent);
+            }
+        });
+
     }
 }
