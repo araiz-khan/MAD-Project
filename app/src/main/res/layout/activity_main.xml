@@ -14,7 +14,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="60dp"
         android:layout_marginBottom="40dp"
-        android:text="Welcome to\n        Alpha Hotels"
+        android:text="Welcome to\n    Alpha Hotels"
         android:textColor="@color/black"
         android:textSize="26sp"
         android:textStyle="bold" />
@@ -51,6 +51,17 @@
         android:backgroundTint="#10A567"
         android:alpha="0.85"
         android:layout_marginBottom="20dp" />
+
+    <Button
+        android:id="@+id/btnLogout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:backgroundTint="@color/black"
+        android:alpha="0.9"
+        android:padding="12dp"
+        android:layout_marginTop="12dp"
+        android:text="Logout" />
 
 
 </LinearLayout>

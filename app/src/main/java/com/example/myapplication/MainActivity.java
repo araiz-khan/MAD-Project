@@ -29,10 +29,13 @@ import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
 
-    Button btnBooking, btnServices, btnAboutUs  ;
+    Button btnBooking, btnServices, btnAboutUs, btnLogout;
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     FirebaseAuth mAuth = FirebaseAuth.getInstance();
     FirebaseUser currentUser;
+
+
+
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -43,8 +46,33 @@ public class MainActivity extends AppCompatActivity {
         currentUser = mAuth.getCurrentUser();
 
         btnBooking = findViewById(R.id.btnBooking);
+        btnLogout=findViewById(R.id.btnLogout);
         btnServices = findViewById(R.id.btnServices);
         btnAboutUs = findViewById(R.id.btnAboutUs);
+        currentUser = mAuth.getCurrentUser();
+
+        if (currentUser==null){
+
+            Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+            startActivity(intent);
+            finish();
+        }
+        else {
+            Toast.makeText(this, "Welcome "+currentUser.getEmail(), Toast.LENGTH_SHORT).show();
+        }
+        
+        btnLogout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                mAuth.signOut();
+                Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+                startActivity(intent);
+                finish();
+
+            }
+        });
+        
 
         btnBooking.setOnClickListener(new View.OnClickListener() {
             @Override

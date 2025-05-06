@@ -27,6 +27,16 @@ public class SignupActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     TextView loginLink;
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        FirebaseUser currentUser=mAuth.getCurrentUser();
+        if (currentUser!=null){
+            Intent intent= new Intent(SignupActivity.this, MainActivity.class);
+            startActivity(intent);
+            finish();
+        }
+    }
 
     @SuppressLint("MissingInflatedId")
     @Override

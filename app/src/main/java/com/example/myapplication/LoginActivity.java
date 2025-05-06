@@ -15,6 +15,7 @@ import com.example.myapplication.R;
 import com.example.myapplication.SignupActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.Firebase;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -24,15 +25,25 @@ public class LoginActivity extends AppCompatActivity {
     EditText emailLogin, passwordLogin;
     Button loginBtn;
     TextView signupLink;
-    private FirebaseAuth mAuth;
+    FirebaseAuth mAuth;
 // ...
 // Initialize Firebase Auth
-
+@Override
+public void onStart() {
+    super.onStart();
+    FirebaseUser currentUser=mAuth.getCurrentUser();
+    if (currentUser!=null){
+        Intent intent= new Intent(LoginActivity.this, MainActivity.class);
+        startActivity(intent);
+        finish();
+    }
+}
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
 
         mAuth = FirebaseAuth.getInstance();
         emailLogin = findViewById(R.id.emailLogin);
@@ -59,8 +70,6 @@ public class LoginActivity extends AppCompatActivity {
                                     // Sign in success, update UI with the signed-in user's information
 
                                     FirebaseUser user = mAuth.getCurrentUser();
-
-                                    Toast.makeText(LoginActivity.this, "Login Successful", Toast.LENGTH_SHORT).show();
 
                                     Intent intent= new Intent(LoginActivity.this, MainActivity.class);
                                    startActivity(intent);
