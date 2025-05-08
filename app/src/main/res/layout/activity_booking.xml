@@ -167,6 +167,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Deluxe\nRs.6000/night"
+                    android:textSize="18sp"
                     android:textAlignment="center"
                     android:textColor="#000000" />
             </LinearLayout>
@@ -196,6 +197,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Premium\nRs.10500/night"
+                    android:textSize="18sp"
                     android:textAlignment="center"
                     android:textColor="#000000" />
             </LinearLayout>
@@ -225,6 +227,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Executive\nRs.15000/night"
+                    android:textSize="18sp"
                     android:textAlignment="center"
                     android:textColor="#000000" />
             </LinearLayout>
