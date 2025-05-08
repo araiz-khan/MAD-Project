@@ -29,6 +29,8 @@ public class BookingActivity extends AppCompatActivity {
     // Declare EditText fields for first name, last name, and age
     EditText firstNameEditText, lastNameEditText, ageEditText, nights;
     Button submitButton;
+    EditText roomStyleEditText;
+
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -37,6 +39,9 @@ public class BookingActivity extends AppCompatActivity {
         setContentView(R.layout.activity_booking); // Link to the activity_booking.xml layout file
 
         // Initialize the views
+        roomStyleEditText = findViewById(R.id.selectedRoom);
+
+
         firstNameEditText = findViewById(R.id.firstName);
         lastNameEditText = findViewById(R.id.lastName);
         ageEditText = findViewById(R.id.age);
@@ -59,6 +64,9 @@ public class BookingActivity extends AppCompatActivity {
                 String lastName = lastNameEditText.getText().toString();
                 String ageStr = ageEditText.getText().toString();
                 String night = nights.getText().toString();
+                String roomStyle = roomStyleEditText.getText().toString();
+
+
 
                 // Validate the input data
                 if (firstName.isEmpty() || lastName.isEmpty() || ageStr.isEmpty()) {
@@ -68,7 +76,10 @@ public class BookingActivity extends AppCompatActivity {
                     try {
                         // Parse the age to an integer
                         int age = Integer.parseInt(ageStr);
-
+                        if (roomStyle.isEmpty()) {
+                            Toast.makeText(BookingActivity.this, "Please enter room style", Toast.LENGTH_SHORT).show();
+                            return;
+                        }
                         // Check if the user is eligible based on age
                         if (age < 18) {
                             Toast.makeText(BookingActivity.this, "You are not eligible to book", Toast.LENGTH_SHORT).show();
@@ -79,6 +90,7 @@ public class BookingActivity extends AppCompatActivity {
                             user.put("last", lastName);
                             user.put("born", age);
                             user.put("nights to stay", night);
+                            user.put("room style", roomStyle);
 
                             // Add data to Firestore
                             db.collection("users")

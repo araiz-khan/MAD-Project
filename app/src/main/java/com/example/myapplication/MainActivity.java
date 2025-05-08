@@ -29,7 +29,7 @@ import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
 
-    Button btnBooking, btn_chk_book, btnAboutUs, btnLogout;
+    Button btnBooking, btn_chk_book, btnAboutUs, btnLogout, btn_update_book, btn_del_book;
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     FirebaseAuth mAuth = FirebaseAuth.getInstance();
     FirebaseUser currentUser;
@@ -48,6 +48,8 @@ public class MainActivity extends AppCompatActivity {
         btn_chk_book = findViewById(R.id.btn_chk_book);
         btnAboutUs = findViewById(R.id.btnAboutUs);
         currentUser = mAuth.getCurrentUser();
+        btn_update_book = findViewById(R.id.btn_update_book);
+        btn_del_book = findViewById(R.id.btn_del_book);
 
         if (currentUser==null){
 
@@ -80,6 +82,22 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        btn_chk_book.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, CheckBookingActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        btn_update_book.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, Update_Data.class);
+                startActivity(intent);
+            }
+        });
+
         btnAboutUs.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -88,13 +106,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        btn_chk_book.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, CheckBookingActivity.class); // or the correct activity
-                startActivity(intent);
-            }
-        });
+
 
     }
 }

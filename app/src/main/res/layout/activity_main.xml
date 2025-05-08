@@ -34,7 +34,27 @@
         android:id="@+id/btn_chk_book"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:text="Check booking "
+        android:text="Check booking"
+        android:textSize="18sp"
+        android:backgroundTint="@color/blue"
+        android:alpha="0.85"
+        android:layout_marginBottom="20dp" />
+
+    <Button
+        android:id="@+id/btn_update_book"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:text="Change Booking Data"
+        android:textSize="18sp"
+        android:backgroundTint="@color/blue"
+        android:alpha="0.85"
+        android:layout_marginBottom="20dp" />
+
+    <Button
+        android:id="@+id/btn_del_book"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:text="Delete Booking"
         android:textSize="18sp"
         android:backgroundTint="@color/blue"
         android:alpha="0.85"
