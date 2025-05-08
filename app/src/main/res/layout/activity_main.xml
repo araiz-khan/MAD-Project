@@ -14,9 +14,9 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="60dp"
         android:layout_marginBottom="40dp"
-        android:text="Welcome to\n    Alpha Hotels"
+        android:text="Welcome to Alpha Hotels"
         android:textColor="@color/black"
-        android:textSize="26sp"
+        android:textSize="32sp"
         android:textStyle="bold" />
 
     <Button
@@ -46,7 +46,7 @@
         android:layout_height="50dp"
         android:text="Change Booking Data"
         android:textSize="18sp"
-        android:backgroundTint="@color/blue"
+        android:backgroundTint="#008090"
         android:alpha="0.85"
         android:layout_marginBottom="20dp" />
 
@@ -56,7 +56,7 @@
         android:layout_height="50dp"
         android:text="Delete Booking"
         android:textSize="18sp"
-        android:backgroundTint="@color/blue"
+        android:backgroundTint="#00004F"
         android:alpha="0.85"
         android:layout_marginBottom="20dp" />
 

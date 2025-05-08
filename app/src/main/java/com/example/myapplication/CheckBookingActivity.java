@@ -1,104 +1,166 @@
 package com.example.myapplication;
 
-import static android.content.ContentValues.TAG;
-
 import android.os.Bundle;
-import android.util.Log;
+import android.util.Log; // Import Log for logging errors
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+import java.util.concurrent.TimeUnit;
 
 public class CheckBookingActivity extends AppCompatActivity {
 
-    EditText nameEditText;
-    Button checkButton;
-    TextView resultTextView;
+    private TextView resultTextView, welcomeTextView;
+    private Button checkButton;
+    private FirebaseAuth mAuth;
+    private FirebaseFirestore db;
 
-    FirebaseFirestore db = FirebaseFirestore.getInstance();
+    // Define the date format expected from Firestore (used in BookingActivity for storage)
+    private static final String DATE_FORMAT_STORAGE = "yyyy-MM-dd";
+    private SimpleDateFormat dateFormatStorage = new SimpleDateFormat(DATE_FORMAT_STORAGE, Locale.US);
+
+    // Define the date format for display (optional, if you want to reformat dates)
+    private SimpleDateFormat dateFormatDisplay = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_check_booking);
 
-        // Initialize views
-        nameEditText = findViewById(R.id.nameEditText);
-        checkButton = findViewById(R.id.checkButton);
-        resultTextView = findViewById(R.id.resultTextView);
+        // Initialize Firebase Auth and Firestore
+        mAuth = FirebaseAuth.getInstance();
+        db = FirebaseFirestore.getInstance();
 
-        if (getSupportActionBar() != null) {
-            getSupportActionBar().setTitle("Check Booking");
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        // Initialize UI elements
+        resultTextView = findViewById(R.id.resultTextView);
+        welcomeTextView = findViewById(R.id.welcomeTextView); // Welcome text view
+        checkButton = findViewById(R.id.checkButton);
+
+        // Set welcome message with the user's email
+        // Check if the user is logged in before getting email
+        if (mAuth.getCurrentUser() != null) {
+            String userEmail = mAuth.getCurrentUser().getEmail();
+            welcomeTextView.setText("Welcome, " + userEmail); // Added "Welcome, " for better context
+        } else {
+            welcomeTextView.setText("Welcome"); // Default welcome if user not logged in (shouldn't happen if this activity requires login)
+            // Optionally, redirect to login activity here
         }
 
 
-        checkButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String enteredName = nameEditText.getText().toString().trim();
+        // Set up button click listener
+        checkButton.setOnClickListener(v -> fetchBookingData());
+    }
 
-                if (enteredName.isEmpty()) {
-                    Toast.makeText(CheckBookingActivity.this, "Please enter a name", Toast.LENGTH_SHORT).show();
-                    return;
-                }
+    private void fetchBookingData() {
+        // Get the current logged-in user's UID
+        // Check if user is logged in before proceeding
+        if (mAuth.getCurrentUser() == null) {
+            Toast.makeText(this, "User not logged in.", Toast.LENGTH_SHORT).show();
+            return; // Exit the method if user is not logged in
+        }
 
-                // Search in Firestore
-                db.collection("users")
-                        .whereEqualTo("first", enteredName)
-                        .get()
-                        .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+        String userId = mAuth.getCurrentUser().getUid();
 
-                            @Override
-                            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                                if (queryDocumentSnapshots.isEmpty()) {
-                                    resultTextView.setText("No booking found for this name.");
-                                } else {
-                                    StringBuilder result = new StringBuilder();
-                                    for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
-                                        String firstName = document.getString("first");
-                                        String lastName = document.getString("last");
-                                        Long age = document.getLong("born");
-                                        String nightsToStay = document.getString("nights to stay"); // Add this line to fetch nights to stay
+        // Fetch the user's booking data from Firestore
+        db.collection("users")
+                .document(userId)
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        DocumentSnapshot document = task.getResult();
+                        if (document.exists()) {
+                            // Retrieve the booking information
+                            String firstName = document.getString("first");
+                            String lastName = document.getString("last");
+                            String roomStyle = document.getString("room style");
+                            // Fetch check-in and check-out dates (stored in yyyy-MM-dd format)
+                            String checkInDateStr = document.getString("checkInDate");
+                            String checkOutDateStr = document.getString("checkOutDate");
 
-                                        result.append("Name: ").append(firstName).append(" ").append(lastName)
-                                                .append("\nAge: ").append(age)
-                                                .append("\nNights to stay: ").append(nightsToStay)
-                                                .append("\n\n");
-                                    }
-                                    resultTextView.setText(result.toString());
+                            // Fetch the calculated number of nights and total price
+                            // Use .get("fieldName") and cast to Long, then to long primitive
+                            Long numberOfNightsLong = document.getLong("numberOfNights");
+                            Long totalPriceLong = document.getLong("totalPrice");
+
+                            long numberOfNights = (numberOfNightsLong != null) ? numberOfNightsLong : -1; // Use -1 to indicate not found
+                            long totalPrice = (totalPriceLong != null) ? totalPriceLong : -1; // Use -1 to indicate not found
+
+
+                            // --- Date Formatting for Display (Optional) ---
+                            String checkInDisplay = "Not available";
+                            String checkOutDisplay = "Not available";
+                            if (checkInDateStr != null) {
+                                try {
+                                    Date checkInDate = dateFormatStorage.parse(checkInDateStr);
+                                    checkInDisplay = dateFormatDisplay.format(checkInDate);
+                                } catch (ParseException e) {
+                                    Log.e("CheckBooking", "Error parsing check-in date for display", e);
+                                    checkInDisplay = checkInDateStr + " (Parse Error)"; // Show raw string if parsing fails
                                 }
                             }
-                        })
-                        .addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
-                                Log.e(TAG, "Error getting documents", e);
-                                Toast.makeText(CheckBookingActivity.this, "Error fetching data", Toast.LENGTH_SHORT).show();
+                            if (checkOutDateStr != null) {
+                                try {
+                                    Date checkOutDate = dateFormatStorage.parse(checkOutDateStr);
+                                    checkOutDisplay = dateFormatDisplay.format(checkOutDate);
+                                } catch (ParseException e) {
+                                    Log.e("CheckBooking", "Error parsing check-out date for display", e);
+                                    checkOutDisplay = checkOutDateStr + " (Parse Error)"; // Show raw string if parsing fails
+                                }
                             }
-                        });
+                            // --- End Date Formatting ---
 
 
-            }
+                            // Display the booking details
+                            StringBuilder resultBuilder = new StringBuilder();
+                            resultBuilder.append("Name: ").append(firstName).append(" ").append(lastName).append("\n");
+                            resultBuilder.append("Room Style: ").append(roomStyle).append("\n");
 
-        });
+                            // Append dates
+                            resultBuilder.append("Check-in: ").append(checkInDisplay).append("\n");
+                            resultBuilder.append("Check-out: ").append(checkOutDisplay).append("\n");
 
+
+                            // Append the number of nights and total price if available
+                            if (numberOfNights >= 0) {
+                                resultBuilder.append("Nights: ").append(numberOfNights).append("\n");
+                            } else {
+                                resultBuilder.append("Nights: Not available\n");
+                            }
+
+                            if (totalPrice >= 0) {
+                                resultBuilder.append("Total Price: Rs.").append(totalPrice);
+                            } else {
+                                resultBuilder.append("Total Price: Not available");
+                            }
+
+
+                            resultTextView.setText(resultBuilder.toString());
+
+                        } else {
+                            resultTextView.setText("No booking found for this user.");
+                        }
+                    } else {
+                        // Handle Firestore task failure
+                        Log.e("CheckBooking", "Error fetching data", task.getException()); // Use Log.e for errors
+                        Toast.makeText(CheckBookingActivity.this, "Error fetching data: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .addOnFailureListener(e -> {
+                    // Handle any other exceptions during the fetch operation
+                    Log.e("CheckBooking", "Error fetching data", e); // Use Log.e for errors
+                    Toast.makeText(CheckBookingActivity.this, "Error fetching data: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                });
     }
-    @Override
-    public boolean onSupportNavigateUp() {
-        finish(); // or use finish();
-        return true;
-    }
-
 }

@@ -1,132 +1,203 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
-    android:gravity="center"
-    android:padding="24dp"
-    android:background="@drawable/background">
+    android:background="@drawable/background"
+    android:fillViewport="true">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Change Your Booking Data"
-        android:textSize="30sp"
-        android:textStyle="bold"
-        android:textColor="#001F3F"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="50dp" />
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/updateSurnameInputLayout"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        app:boxBackgroundMode="outline"
-        app:boxCornerRadiusBottomEnd="12dp"
-        app:boxCornerRadiusTopEnd="12dp"
-        app:boxCornerRadiusBottomStart="12dp"
-        app:boxCornerRadiusTopStart="12dp"
-        app:boxBackgroundColor="@color/white"
-        android:alpha="0.8"
-        android:hint="Enter Surname">
+        android:orientation="vertical"
+        android:gravity="center_horizontal"
+        android:padding="24dp"
+        android:layout_marginTop="30dp">
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/surnameEditText"
-            android:inputType="text"
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Change Your Booking Data"
+            android:textSize="30sp"
+            android:textStyle="bold"
+            android:textColor="#001F3F"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="20dp" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/updateSurnameInputLayout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-    </com.google.android.material.textfield.TextInputLayout>
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            app:boxBackgroundMode="outline"
+            app:boxCornerRadiusBottomEnd="12dp"
+            app:boxCornerRadiusTopEnd="12dp"
+            app:boxCornerRadiusBottomStart="12dp"
+            app:boxCornerRadiusTopStart="12dp"
+            app:boxBackgroundColor="@android:color/white"
+            android:alpha="0.8"
+            android:hint="Enter Surname">
 
-    <!-- Update Age -->
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/updateAgeInputLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        app:boxBackgroundMode="outline"
-        app:boxCornerRadiusBottomEnd="12dp"
-        app:boxCornerRadiusTopEnd="12dp"
-        app:boxCornerRadiusBottomStart="12dp"
-        app:boxCornerRadiusTopStart="12dp"
-        app:boxBackgroundColor="@color/white"
-        android:alpha="0.8"
-        android:hint="Enter Age">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/surnameEditText"
+                android:inputType="text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/ageEditText"
-            android:inputType="number"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/updateAgeInputLayout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-    </com.google.android.material.textfield.TextInputLayout>
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            app:boxBackgroundMode="outline"
+            app:boxCornerRadiusBottomEnd="12dp"
+            app:boxCornerRadiusTopEnd="12dp"
+            app:boxCornerRadiusBottomStart="12dp"
+            app:boxCornerRadiusTopStart="12dp"
+            app:boxBackgroundColor="@android:color/white"
+            android:alpha="0.8"
+            android:hint="Enter Age">
 
-    <!-- Update Number of Nights -->
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/updateNightsInputLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        app:boxBackgroundMode="outline"
-        app:boxCornerRadiusBottomEnd="12dp"
-        app:boxCornerRadiusTopEnd="12dp"
-        app:boxCornerRadiusBottomStart="12dp"
-        app:boxCornerRadiusTopStart="12dp"
-        app:boxBackgroundColor="@color/white"
-        android:alpha="0.8"
-        android:hint="Enter Number of Nights">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/ageEditText"
+                android:inputType="number"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/nightsEditText"
-            android:inputType="number"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/updateCheckInInputLayout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-    </com.google.android.material.textfield.TextInputLayout>
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            app:boxBackgroundMode="outline"
+            app:boxCornerRadiusBottomEnd="12dp"
+            app:boxCornerRadiusTopEnd="12dp"
+            app:boxCornerRadiusBottomStart="12dp"
+            app:boxCornerRadiusTopStart="12dp"
+            app:boxBackgroundColor="@android:color/white"
+            android:alpha="0.8"
+            android:hint="Select Check-in Date">
 
-    <!-- Update Room Style -->
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/updateStyleInputLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        app:boxBackgroundMode="outline"
-        app:boxCornerRadiusBottomEnd="12dp"
-        app:boxCornerRadiusTopEnd="12dp"
-        app:boxCornerRadiusBottomStart="12dp"
-        app:boxCornerRadiusTopStart="12dp"
-        app:boxBackgroundColor="@color/white"
-        android:alpha="0.8"
-        android:hint="Enter Room Style">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/checkInDateEditText"
+                android:inputType="none"
+                android:focusable="false"
+                android:clickable="true"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.textfield.TextInputEditText
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/updateCheckOutInputLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            app:boxBackgroundMode="outline"
+            app:boxCornerRadiusBottomEnd="12dp"
+            app:boxCornerRadiusTopEnd="12dp"
+            app:boxCornerRadiusBottomStart="12dp"
+            app:boxCornerRadiusTopStart="12dp"
+            app:boxBackgroundColor="@android:color/white"
+            android:alpha="0.8"
+            android:hint="Select Check-out Date">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/checkOutDateEditText"
+                android:inputType="none"
+                android:focusable="false"
+                android:clickable="true"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/updateStyleInputLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            app:boxBackgroundMode="outline"
+            app:boxCornerRadiusBottomEnd="12dp"
+            app:boxCornerRadiusTopEnd="12dp"
+            app:boxCornerRadiusBottomStart="12dp"
+            app:boxCornerRadiusTopStart="12dp"
+            app:boxBackgroundColor="@android:color/white"
+            android:alpha="0.8"
+            android:hint="Select Room Style"> <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/styleEditText"
             android:inputType="text"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-    </com.google.android.material.textfield.TextInputLayout>
+            android:layout_height="wrap_content"
+            android:focusable="false"
+            android:clickable="true"/> </com.google.android.material.textfield.TextInputLayout>
 
-    <!-- Update Button -->
-    <Button
-        android:id="@+id/updateButton"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:text="Update Your Booking"
-        android:textSize="18sp"
-        android:textColor="#FFFFFF"
-        android:backgroundTint="@color/black"
-        android:layout_marginTop="20dp"
-        android:layout_marginBottom="10dp" />
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/updateNightsInputLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            app:boxBackgroundMode="outline"
+            app:boxCornerRadiusBottomEnd="12dp"
+            app:boxCornerRadiusTopEnd="12dp"
+            app:boxCornerRadiusBottomStart="12dp"
+            app:boxCornerRadiusTopStart="12dp"
+            app:boxBackgroundColor="@android:color/white"
+            android:alpha="0.8"
+            android:hint="Number of Nights">
+            <TextView
+                android:id="@+id/nightsTextView"  android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
+                android:paddingStart="12dp"
+                android:paddingEnd="12dp"
+                android:gravity="center_vertical"
+                android:text="Total Number of Nights:"
+                android:textColor="@android:color/black"
+                android:textSize="18sp"/>
+        </com.google.android.material.textfield.TextInputLayout>
 
-    <!-- Delete Button -->
-    <Button
-        android:id="@+id/deleteButton"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:text="Delete Your Booking"
-        android:textSize="18sp"
-        android:textColor="#FFFFFF"
-        android:backgroundTint="@color/black"
-        android:layout_marginTop="20dp"
-        android:layout_marginBottom="10dp" />
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/updateTotalPriceInputLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            app:boxBackgroundMode="outline"
+            app:boxCornerRadiusBottomEnd="12dp"
+            app:boxCornerRadiusTopEnd="12dp"
+            app:boxCornerRadiusBottomStart="12dp"
+            app:boxCornerRadiusTopStart="12dp"
+            app:boxBackgroundColor="@android:color/white"
+            android:alpha="0.8"
+            android:hint="Total Price">
+            <TextView
+                android:id="@+id/totalPriceTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
+                android:paddingStart="12dp"
+                android:paddingEnd="12dp"
+                android:gravity="center_vertical"
+                android:text="Total Price: Rs."
+                android:textColor="@android:color/black"
+                android:textSize="18sp"/>
+        </com.google.android.material.textfield.TextInputLayout>
 
-</LinearLayout>
+
+        <Button
+            android:id="@+id/updateButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Update Your Booking"
+            android:textSize="18sp"
+            android:textColor="#FFFFFF"
+            android:backgroundTint="@android:color/black"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="50dp"
+            android:minHeight="50dp"/>
+
+    </LinearLayout>
+</ScrollView>
