@@ -20,14 +20,15 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 
-import java.text.ParseException; // Import for handling parsing exceptions
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date; // Import Date
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
-import java.util.concurrent.TimeUnit; // Import TimeUnit
+import java.util.Objects;
+import java.util.concurrent.TimeUnit;
 
 public class BookingActivity extends AppCompatActivity {
 
@@ -45,7 +46,8 @@ public class BookingActivity extends AppCompatActivity {
     ImageView imgDeluxe, imgPremium, imgExecutive;
 
     // Store dates as strings initially, will parse for calculation
-    String checkInDateStr = "", checkOutDateStr = "";
+    String checkInDateStr = "";
+    String checkOutDateStr = "";
     String selectedRoomStyle = ""; // Variable to store the selected room style
 
     // Date format for parsing and displaying
@@ -146,29 +148,81 @@ public class BookingActivity extends AppCompatActivity {
     }
 
 
-    // Method to show date picker dialog
+    // Method to show date picker dialog with validation
     private void pickDate(boolean isCheckIn) {
         Calendar calendar = Calendar.getInstance();
         DatePickerDialog datePickerDialog = new DatePickerDialog(this,
                 (view, year, month, dayOfMonth) -> {
-                    Calendar selectedDate = Calendar.getInstance();
-                    selectedDate.set(year, month, dayOfMonth);
+                    Calendar selectedCalendar = Calendar.getInstance();
+                    selectedCalendar.set(year, month, dayOfMonth);
+                    selectedCalendar.set(Calendar.HOUR_OF_DAY, 0); // Set time to 00:00 for accurate date comparison
+                    selectedCalendar.set(Calendar.MINUTE, 0);
+                    selectedCalendar.set(Calendar.SECOND, 0);
+                    selectedCalendar.set(Calendar.MILLISECOND, 0);
 
-                    // Store date in a consistent format for calculation
-                    String dateForStorage = dateFormatStorage.format(selectedDate.getTime());
-                    // Format date for display
-                    String dateForDisplay = dateFormatDisplay.format(selectedDate.getTime());
+                    Calendar todayCalendar = Calendar.getInstance();
+                    todayCalendar.set(Calendar.HOUR_OF_DAY, 0); // Set time to 00:00 for accurate date comparison
+                    todayCalendar.set(Calendar.MINUTE, 0);
+                    todayCalendar.set(Calendar.SECOND, 0);
+                    todayCalendar.set(Calendar.MILLISECOND, 0);
+
+
+                    Date selectedDate = selectedCalendar.getTime();
+                    Date today = todayCalendar.getTime();
 
 
                     if (isCheckIn) {
-                        checkInDateStr = dateForStorage; // Store for calculation
-                        if (checkInText != null) {
-                            checkInText.setText("Check-in: " + dateForDisplay); // Display formatted date
+                        // Validate Check-in Date (must be today or in the future)
+                        if (selectedDate.before(today)) {
+                            Toast.makeText(this, "Check-in date cannot be in the past.", Toast.LENGTH_SHORT).show();
+                            return; // Do not update date if invalid
                         }
-                    } else {
-                        checkOutDateStr = dateForStorage; // Store for calculation
+
+                        // If Check-out date is already selected, ensure check-in is not after check-out
+                        if (!checkOutDateStr.isEmpty()) {
+                            try {
+                                Date checkOutDate = dateFormatStorage.parse(checkOutDateStr);
+                                if (selectedDate.after(checkOutDate)) {
+                                    Toast.makeText(this, "Check-in date cannot be after Check-out date.", Toast.LENGTH_SHORT).show();
+                                    return; // Do not update date if invalid
+                                }
+                            } catch (ParseException e) {
+                                Log.e(TAG, "Error parsing check-out date for validation", e);
+                                // Continue even if parsing fails, as the primary validation is done
+                            }
+                        }
+
+                        // If validation passes, update check-in date
+                        checkInDateStr = dateFormatStorage.format(selectedDate); // Store for calculation
+                        if (checkInText != null) {
+                            checkInText.setText("Check-in: " + dateFormatDisplay.format(selectedDate)); // Display formatted date
+                        }
+
+                    } else { // isCheckOut
+                        // Validate Check-out Date (must be after Check-in Date)
+                        if (checkInDateStr.isEmpty()) {
+                            Toast.makeText(this, "Please select Check-in date first.", Toast.LENGTH_SHORT).show();
+                            return; // Do not update date if check-in is not selected
+                        }
+
+                        try {
+                            Date checkInDate = dateFormatStorage.parse(checkInDateStr);
+
+                            if (selectedDate.before(checkInDate) || selectedDate.equals(checkInDate)) {
+                                Toast.makeText(this, "Check-out date must be after Check-in date.", Toast.LENGTH_SHORT).show();
+                                return; // Do not update date if invalid
+                            }
+
+                        } catch (ParseException e) {
+                            Log.e(TAG, "Error parsing check-in date for validation", e);
+                            Toast.makeText(this, "Error validating dates. Please re-select Check-in.", Toast.LENGTH_SHORT).show();
+                            return; // Do not update date if check-in parsing fails
+                        }
+
+                        // If validation passes, update check-out date
+                        checkOutDateStr = dateFormatStorage.format(selectedDate); // Store for calculation
                         if (checkOutText != null) {
-                            checkOutText.setText("Check-out: " + dateForDisplay); // Display formatted date
+                            checkOutText.setText("Check-out: " + dateFormatDisplay.format(selectedDate)); // Display formatted date
                         }
                     }
                 },
@@ -179,7 +233,6 @@ public class BookingActivity extends AppCompatActivity {
     }
 
     // Method to handle submission logic
-// Method to handle submission logic
     private void submitData() {
         String firstName = firstNameEditText != null ? firstNameEditText.getText().toString().trim() : "";
         String lastName = lastNameEditText != null ? lastNameEditText.getText().toString().trim() : "";
@@ -214,14 +267,14 @@ public class BookingActivity extends AppCompatActivity {
             Date checkInDate = dateFormatStorage.parse(checkInDateStr);
             Date checkOutDate = dateFormatStorage.parse(checkOutDateStr);
 
-            // Ensure check-out is after check-in
-            if (checkOutDate.after(checkInDate)) {
-                long diffInMillis = checkOutDate.getTime() - checkInDate.getTime();
-                numberOfNights = TimeUnit.DAYS.convert(diffInMillis, TimeUnit.MILLISECONDS);
-            } else {
-                Toast.makeText(this, "Check-out date must be after check-in date.", Toast.LENGTH_SHORT).show();
+            // Re-validate dates here just in case, though pickDate should handle this
+            if (checkOutDate.before(checkInDate) || checkOutDate.equals(checkInDate)) {
+                Toast.makeText(this, "Check-out date must be after Check-in date.", Toast.LENGTH_SHORT).show();
                 return; // Stop submission if dates are invalid
             }
+
+            long diffInMillis = checkOutDate.getTime() - checkInDate.getTime();
+            numberOfNights = TimeUnit.DAYS.convert(diffInMillis, TimeUnit.MILLISECONDS);
 
         } catch (ParseException e) {
             Toast.makeText(this, "Error parsing selected dates.", Toast.LENGTH_SHORT).show();
@@ -230,7 +283,7 @@ public class BookingActivity extends AppCompatActivity {
         }
 
 
-        String userId = mAuth.getCurrentUser().getUid();
+        String userId = Objects.requireNonNull(mAuth.getCurrentUser()).getUid();
 
         // Room prices based on the selectedRoomStyle
         int pricePerNight;

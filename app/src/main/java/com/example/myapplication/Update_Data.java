@@ -209,7 +209,7 @@ public class Update_Data extends AppCompatActivity {
                 });
     }
 
-    // Method to show date picker dialog
+    // Method to show date picker dialog with validation
     private void pickDate(boolean isCheckIn) {
         Calendar calendar = Calendar.getInstance();
         // Set the initial date of the picker to the currently selected date if available
@@ -231,29 +231,80 @@ public class Update_Data extends AppCompatActivity {
 
         DatePickerDialog datePickerDialog = new DatePickerDialog(this,
                 (view, year, month, dayOfMonth) -> {
-                    Calendar selectedDate = Calendar.getInstance();
-                    selectedDate.set(year, month, dayOfMonth);
+                    Calendar selectedCalendar = Calendar.getInstance();
+                    selectedCalendar.set(year, month, dayOfMonth);
+                    selectedCalendar.set(Calendar.HOUR_OF_DAY, 0); // Set time to 00:00 for accurate date comparison
+                    selectedCalendar.set(Calendar.MINUTE, 0);
+                    selectedCalendar.set(Calendar.SECOND, 0);
+                    selectedCalendar.set(Calendar.MILLISECOND, 0);
 
-                    // Store date in a consistent format for calculation and storage
-                    String dateForStorage = dateFormatStorage.format(selectedDate.getTime());
-                    // Format date for display
-                    String dateForDisplay = dateFormatDisplay.format(selectedDate.getTime());
+                    Calendar todayCalendar = Calendar.getInstance();
+                    todayCalendar.set(Calendar.HOUR_OF_DAY, 0); // Set time to 00:00 for accurate date comparison
+                    todayCalendar.set(Calendar.MINUTE, 0);
+                    todayCalendar.set(Calendar.SECOND, 0);
+                    todayCalendar.set(Calendar.MILLISECOND, 0);
+
+
+                    Date selectedDate = selectedCalendar.getTime();
+                    Date today = todayCalendar.getTime();
+
 
                     if (isCheckIn) {
-                        selectedCheckInDateStr = dateForStorage; // Store for calculation/update
-                        if (checkInDateEditText != null) {
-                            checkInDateEditText.setText(dateForDisplay); // Display formatted date
+                        // Validate Check-in Date (must be today or in the future)
+                        if (selectedDate.before(today)) {
+                            Toast.makeText(this, "Check-in date cannot be in the past.", Toast.LENGTH_SHORT).show();
+                            return; // Do not update date if invalid
                         }
-                    } else {
-                        selectedCheckOutDateStr = dateForStorage; // Store for calculation/update
+
+                        // If Check-out date is already selected, ensure check-in is not after check-out
+                        if (!selectedCheckOutDateStr.isEmpty()) { // Use selectedCheckOutDateStr
+                            try {
+                                Date checkOutDate = dateFormatStorage.parse(selectedCheckOutDateStr); // Use selectedCheckOutDateStr
+                                if (selectedDate.after(checkOutDate)) {
+                                    Toast.makeText(this, "Check-in date cannot be after Check-out date.", Toast.LENGTH_SHORT).show();
+                                    return; // Do not update date if invalid
+                                }
+                            } catch (ParseException e) {
+                                Log.e(TAG, "Error parsing check-out date for validation", e);
+                                // Continue even if parsing fails, as the primary validation is done
+                            }
+                        }
+
+                        // If validation passes, update check-in date
+                        selectedCheckInDateStr = dateFormatStorage.format(selectedDate); // Store for calculation
+                        if (checkInDateEditText != null) {
+                            checkInDateEditText.setText(dateFormatDisplay.format(selectedDate)); // Display formatted date
+                        }
+
+                    } else { // isCheckOut
+                        // Validate Check-out Date (must be after Check-in Date)
+                        if (selectedCheckInDateStr.isEmpty()) { // Use selectedCheckInDateStr
+                            Toast.makeText(this, "Please select Check-in date first.", Toast.LENGTH_SHORT).show();
+                            return; // Do not update date if check-in is not selected
+                        }
+
+                        try {
+                            Date checkInDate = dateFormatStorage.parse(selectedCheckInDateStr); // Use selectedCheckInDateStr
+
+                            if (selectedDate.before(checkInDate) || selectedDate.equals(checkInDate)) {
+                                Toast.makeText(this, "Check-out date must be after Check-in date.", Toast.LENGTH_SHORT).show();
+                                return; // Do not update date if invalid
+                            }
+
+                        } catch (ParseException e) {
+                            Log.e(TAG, "Error parsing check-in date for validation", e);
+                            Toast.makeText(this, "Error validating dates. Please re-select Check-in.", Toast.LENGTH_SHORT).show();
+                            return; // Do not update date if check-in parsing fails
+                        }
+
+                        // If validation passes, update check-out date
+                        selectedCheckOutDateStr = dateFormatStorage.format(selectedDate); // Store for calculation
                         if (checkOutDateEditText != null) {
-                            checkOutDateEditText.setText(dateForDisplay); // Display formatted date
+                            checkOutDateEditText.setText(dateFormatDisplay.format(selectedDate)); // Display formatted date
                         }
                     }
-
-                    // Recalculate nights and update the TextViews display
+                    // Recalculate nights and update the TextViews display after date selection
                     recalculateNightsAndPrice();
-
                 },
                 calendar.get(Calendar.YEAR),
                 calendar.get(Calendar.MONTH),
@@ -321,7 +372,7 @@ public class Update_Data extends AppCompatActivity {
                     if (totalPriceTextView != null) {
                         totalPriceTextView.setText("Total Price: Invalid Dates");
                     }
-                    Toast.makeText(this, "Check-out date must be after check-in date.", Toast.LENGTH_SHORT).show();
+                    // No Toast here, as pickDate already shows it
                 }
 
             } catch (ParseException e) {
@@ -332,7 +383,7 @@ public class Update_Data extends AppCompatActivity {
                 if (totalPriceTextView != null) {
                     totalPriceTextView.setText("Total Price: Error");
                 }
-                Toast.makeText(this, "Error calculating nights and price.", Toast.LENGTH_SHORT).show();
+                // No Toast here, as pickDate handles parsing errors during selection
             }
         } else {
             // If dates are not both selected, update TextViews
@@ -401,18 +452,17 @@ public class Update_Data extends AppCompatActivity {
             Date checkInDate = dateFormatStorage.parse(newCheckInDateStr);
             Date checkOutDate = dateFormatStorage.parse(newCheckOutDateStr);
 
-            // Ensure check-out is after check-in
-            if (checkOutDate.after(checkInDate)) {
-                long diffInMillis = checkOutDate.getTime() - checkInDate.getTime();
-                numberOfNights = TimeUnit.DAYS.convert(diffInMillis, TimeUnit.MILLISECONDS);
-
-                // Calculate total price
-                totalPrice = pricePerNight * numberOfNights;
-
-            } else {
-                Toast.makeText(this, "Check-out date must be after check-in date.", Toast.LENGTH_SHORT).show();
+            // Re-validate dates here just in case, though pickDate should handle this
+            if (checkOutDate.before(checkInDate) || checkOutDate.equals(checkInDate)) {
+                Toast.makeText(this, "Check-out date must be after Check-in date.", Toast.LENGTH_SHORT).show();
                 return; // Stop update if dates are invalid
             }
+
+            long diffInMillis = checkOutDate.getTime() - checkInDate.getTime();
+            numberOfNights = TimeUnit.DAYS.convert(diffInMillis, TimeUnit.MILLISECONDS);
+
+            // Calculate total price
+            totalPrice = pricePerNight * numberOfNights;
 
         } catch (ParseException e) {
             Log.e(TAG, "Error parsing dates for update", e);
