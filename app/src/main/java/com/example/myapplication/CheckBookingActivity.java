@@ -52,7 +52,7 @@ public class CheckBookingActivity extends AppCompatActivity {
         // Check if the user is logged in before getting email
         if (mAuth.getCurrentUser() != null) {
             String userEmail = mAuth.getCurrentUser().getEmail();
-            welcomeTextView.setText("Welcome, " + userEmail); // Added "Welcome, " for better context
+            welcomeTextView.setText(userEmail); // Added "Welcome, " for better context
         } else {
             welcomeTextView.setText("Welcome"); // Default welcome if user not logged in (shouldn't happen if this activity requires login)
             // Optionally, redirect to login activity here
