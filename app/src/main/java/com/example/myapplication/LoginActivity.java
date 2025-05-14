@@ -61,7 +61,8 @@ public void onStart() {
             } else if (password.isEmpty()) {
                 passwordLogin.setError("Enter password");
                 Toast.makeText(this, "Enter password", Toast.LENGTH_SHORT).show();
-            } else {
+            }
+            else {
                 mAuth.signInWithEmailAndPassword(email, password)
                         .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                             @Override
